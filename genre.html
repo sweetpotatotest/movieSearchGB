@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button onclick="show()">11111</button>
+  <script src="/movie.js" defer></script>
+  <script>
+    function show() {
+      let unique = [];
+      movieList.results.forEach((movie) => {
+        //console.log("genre:" + movie.genre_ids);
+        movie.genre_ids.forEach((arr) => {
+          if (!unique.includes(arr)) {
+            unique.push(arr);
+          }
+        });
+      });
+      console.log(unique);
+    }
+  </script>
+</body>
+</html>
