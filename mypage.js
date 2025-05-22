@@ -91,6 +91,7 @@ drawMovie();
         });
     }
 
+    //인기순정렬 - 추가중
     function popular(event) {
       console.log(event.target.checked);
       removeMovie();
@@ -178,7 +179,9 @@ drawMovie();
     //영화 리스트
     function drawMovie() {
       movieList.results.forEach((element, movCount)=> {
-        const template = `<div class="col-4">
+        const template = `
+        <div class="col-4">
+          <a href="./pageDetail.html?id=${element.id}" class="link-underline link-underline-opacity-0">
             <div class="card mb-3" style="max-width: 540px;">
               <div class="row g-0">
                 <div class="col-md-4">
@@ -193,7 +196,9 @@ drawMovie();
                 </div>
               </div>
             </div>
-          </div>`;
+            </a>
+          </div>
+          `;
           
           document.getElementById("movies").insertAdjacentHTML("beforeend", template);
         });

@@ -12,19 +12,90 @@
   <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary " data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/mypage.html">Navbar</a>
+        <a class="navbar-brand" href="./mypage.html">영화검색</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link" href="/pageDetail.html">pageDetail</a>
-            <a class="nav-link" href="/profile.html">profile</a>
+            <a class="nav-link" href="./profile.html">profile</a>
           </div>
         </div>
       </div>
     </nav>
   </header>
-  de
+  
+  <section>
+    <div class="container mt-5" id="detail">
+      
+    </div>
+  </section>
+
+  <script type="module">
+    import {movieList} from './movie.js';
+
+    function genreCheck(num){
+      switch (num) {
+        case 10751: return "가족";
+        case 35: return "코미디";
+        case 12: return "어드벤쳐";
+        case 14: return "판타지";
+        case 27: return "호러, 공포";
+        case 9648: return "미스테리";
+        case 10752: return "전쟁";
+        case 28: return "액션";
+        case 80: return "범죄";
+        case 53: return "스릴러";
+        case 878: return "SF";
+        case 18: return "드라마";
+        case 37: return "서부영화";
+        case 16: return "애니메이션";
+        case 10749: return "로맨스";
+        case 99: return "다큐멘터리";
+        case 36: return "역사";
+        case 10402: return "음악";
+        default: return "검색";
+      }
+    };
+
+    let params = new URLSearchParams(document.location.search);
+    let id = params.get("id");
+    const movie = movieList.results.find(item => item.id == id);
+
+    let genreSave = [];
+    
+      for (let i = 0; i < movie.genre_ids.length; i++) {
+        genreSave.push(genreCheck(movie.genre_ids[i]));
+      };
+    
+
+    let genreList = '';
+    genreSave.forEach((genre, index)=> {
+      genreList += genre;
+      if (index < genreSave.length - 1) {
+        genreList += ', ';
+      }
+    });
+
+
+    const detailTemplate = 
+    `
+    <div class="card mb-3 mx-auto" style="width: 50%;">
+      <img src="https://image.tmdb.org/t/p/w440_and_h660_face/${movie.backdrop_path}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><strong>원제목 : ${movie.original_title}</strong></h5>
+        <p class="card-text">간략 설명 : ${movie.overview}</p>
+        <p class="card-text">인기도 : ${movie.popularity}</p>
+        <p class="card-text">언어 : ${movie.original_language}</p>
+        <p class="card-text">평균 평점 : ${movie.vote_average}</p>
+        <p class="card-text">평점 투표수 : ${movie.vote_count}</p>
+        <p class="card-text">장르 : ${genreList}</p>
+        <p class="card-text"><small class="text-muted">출시년도 : ${movie.release_date}</small></p>
+      </div>
+    </div>
+    `;
+    document.getElementById("detail").insertAdjacentHTML("beforeend", detailTemplate);
+    
+  </script>
 </body>
 </html>
